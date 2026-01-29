@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CFI Follow-Up Practice Trainer (Basement / Crawl Space / Concrete Slab)</title>
+  <style>
+    :root{
+      --bg:#0f172a;
+      --card:#111827;
+      --muted:#9ca3af;
+      --text:#e5e7eb;
+      --accent:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --line:#1f2937;
+      --chip:#0b1220;
+      --ink:#e2e8f0;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 20% 10%, #1b2a6b33, transparent),
+                  radial-gradient(900px 700px at 80% 20%, #0ea5e933, transparent),
+                  radial-gradient(900px 700px at 60% 80%, #22c55e22, transparent),
+                  var(--bg);
+      color:var(--text);
+    }
+    header{
+      padding:18px 16px 10px;
+      border-bottom:1px solid var(--line);
+      background: linear-gradient(180deg, #0b1220cc, transparent);
+      position:sticky; top:0; z-index:5;
+      backdrop-filter: blur(6px);
+    }
+    h1{ margin:0 0 6px 0; font-size:18px; letter-spacing:.2px; }
+    .sub{ margin:0; color:var(--muted); font-size:12.5px; line-height:1.3; }
+    .wrap{ max-width:1100px; margin:0 auto; padding:14px 16px 28px; }
+    .grid{ display:grid; gap:12px; grid-template-columns: 1.1fr .9fr; }
+    @media (max-width: 920px){ .grid{ grid-template-columns:1fr; } }
+    .card{
+      background: linear-gradient(180deg, #0b1220aa, #0b122088);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    select, button, textarea{
+      background:#0b1220;
+      border:1px solid #23324a;
+      color:var(--text);
+      border-radius:10px;
+      padding:10px 10px;
+      font-size:14px;
+      outline:none;
+    }
+    select:focus, textarea:focus{
+      border-color:#3b82f6;
+      box-shadow:0 0 0 3px rgba(59,130,246,.18);
+    }
+    button{
+      cursor:pointer;
+      border-color:#1f3a2a;
+      background: linear-gradient(180deg, #22c55e33, #22c55e10);
+    }
+    button:hover{ filter: brightness(1.08); }
+    button.secondary{
+      border-color:#24324a;
+      background: linear-gradient(180deg, #60a5fa22, #60a5fa10);
+    }
+    button.danger{
+      border-color:#40202a;
+      background: linear-gradient(180deg, #ef444422, #ef444410);
+    }
+    .pill{
+      padding:6px 10px;
+      border-radius:999px;
+      background:var(--chip);
+      border:1px solid #23324a;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .divider{ margin:12px 0; border-top:1px solid var(--line); }
+    .section-title{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; margin:0 0 8px 0; font-size:14px; color:var(--ink);
+    }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+    .qa{ display:grid; gap:8px; }
+    .qblock{
+      padding:10px 10px;
+      border:1px solid #1e2a3f;
+      border-radius:12px;
+      background: rgba(2,6,23,.35);
+    }
+    .qline{ color:#cbd5e1; font-size:12.5px; margin-bottom:4px; }
+    .aline{ color:var(--text); font-size:14px; line-height:1.35; white-space:pre-wrap; }
+    textarea{ width:100%; min-height:110px; resize:vertical; line-height:1.35; }
+    .score{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .badge{
+      font-weight:700; border-radius:12px; padding:8px 10px;
+      border:1px solid #23324a; background:#0b1220; min-width:84px; text-align:center;
+    }
+    .badge.good{ border-color:#14532d; background: #22c55e1a; color:#bbf7d0;}
+    .badge.ok{ border-color:#78350f; background: #f59e0b1a; color:#fde68a;}
+    .badge.bad{ border-color:#7f1d1d; background: #ef44441a; color:#fecaca;}
+    .hint{ color:var(--muted); font-size:12.5px; line-height:1.35; }
+    ul{ margin:8px 0 0 18px; padding:0; color:#cbd5e1; font-size:13px; line-height:1.4; }
+    .mini{ font-size:12px; color:var(--muted); }
+    .kpi{ display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; margin-top:10px; }
+    @media (max-width: 600px){ .kpi{ grid-template-columns:1fr; } }
+    .kpi .k{
+      border:1px solid #1e2a3f; border-radius:12px; padding:10px;
+      background: rgba(2,6,23,.35);
+    }
+    .k .label{ color:var(--muted); font-size:12px; margin-bottom:4px;}
+    .k .val{ font-size:16px; font-weight:700;}
+    .footer-note{ margin-top:10px; color:var(--muted); font-size:12px; }
+    .smallcaps{ font-variant: all-small-caps; letter-spacing:.6px; }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <h1>CFI Follow-Up Practice Trainer</h1>
+    <p class="sub">
+      Practice follow-up questions for <span class="mono">Basement</span>, <span class="mono">Crawl Space</span>, and <span class="mono">Concrete Slab</span>.
+      You’ll get randomized customer responses to the core consultation questions, then you write a follow-up question. The tool scores it and explains why.
+    </p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="grid">
+    <div class="card" id="scenarioCard">
+      <div class="row" style="justify-content:space-between;">
+        <div class="row">
+          <span class="pill"><span class="smallcaps">Consult Type</span></span>
+          <select id="consultType">
+            <option value="basement">Basement</option>
+            <option value="crawlspace">Crawl Space</option>
+            <option value="concrete">Concrete Slab</option>
+          </select>
+          <span class="pill" id="scenarioMeta">Scenario: —</span>
+          <span class="pill" id="scenarioCount">Pool: —</span>
+        </div>
+        <div class="row">
+          <button class="secondary" id="newScenarioBtn">New Scenario</button>
+          <button class="danger" id="resetBtn" title="Resets your stats">Reset Stats</button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-title">
+        <div>Customer Responses (based on the blank consultation pages)</div>
+        <div class="mini" id="focusHint">Goal: ask a high-quality follow-up that moves the consult forward.</div>
+      </div>
+
+      <div class="qa" id="scenarioQA"></div>
+
+      <div class="divider"></div>
+
+      <div class="section-title">
+        <div>Your Follow-Up Question</div>
+        <div class="mini">Write exactly one follow-up question.</div>
+      </div>
+
+      <textarea id="userQuestion" placeholder="Type your follow-up question here…"></textarea>
+
+      <div class="row" style="margin-top:10px; justify-content:space-between;">
+        <div class="hint" id="rubricHint">
+          Scoring favors: open-ended + specific, ties to their answer, identifies impact/urgency/stakes, and avoids leading.
+        </div>
+        <div class="row">
+          <button id="scoreBtn">Score My Question</button>
+          <button class="secondary" id="revealBetterBtn" title="Shows a strong example follow-up for this scenario">Show Example</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">
+        <div>Rating & Coaching</div>
+        <div class="pill">Practice Mode</div>
+      </div>
+
+      <div class="score" style="margin-top:8px;">
+        <div class="badge" id="scoreBadge">—</div>
+        <div class="pill" id="scoreLabel">Waiting for a submission</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-title">
+        <div>What You Did Well / Improve</div>
+        <div class="mini">Auto-coaching based on your text.</div>
+      </div>
+      <div id="feedback" class="hint">Submit a follow-up question to get a score and targeted feedback.</div>
+
+      <div class="divider"></div>
+
+      <div class="section-title">
+        <div>Strong Example Follow-Up (for this scenario)</div>
+        <div class="mini">Use it to calibrate, not to memorize.</div>
+      </div>
+      <div class="qblock">
+        <div class="aline" id="exampleFollowUp">—</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-title">
+        <div>Practice Stats</div>
+        <div class="mini">Saved in your browser.</div>
+      </div>
+
+      <div class="kpi">
+        <div class="k">
+          <div class="label">Attempts</div>
+          <div class="val" id="statAttempts">0</div>
+        </div>
+        <div class="k">
+          <div class="label">Avg Score</div>
+          <div class="val" id="statAvg">0.0</div>
+        </div>
+        <div class="k">
+          <div class="label">Best Score</div>
+          <div class="val" id="statBest">0</div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        Tip: The best follow-ups are “specific + open” (who/what/when/how), tied to their answer, and push toward consequences, timeline, or decision drivers.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   EXPANDED SCENARIO ENGINE
+   You asked: +100 more scenarios for EACH consult type.
+   This version generates ~150–220 UNIQUE scenarios per type
+   by synthesizing answers from many factor pools + archetypes.
+   ============================================================ */
+
+const CORE_TOP_QUESTIONS = [
+  "When was the home built?",
+  "How long have you lived here?",
+  "Is this your forever home?",
+  "What problems have you noticed?",
+  "When did you first notice this problem?",
+  "What changes have you noticed since then?",
+  "How has this issue impacted you so far?",
+  "Have you attempted any repairs in the past?",
+  "What about the problem concerns you the most?",
+  "What’s prompting you to take action now?"
+];
+
+const BASEMENT_SPEC_QUESTIONS = [
+  "Have you noticed water coming into the basement?",
+  "Where does the water come in (walls / floor / joint)?",
+  "How often does it leak?",
+  "What’s the most water you’ve ever had?",
+  "Have you seen any mold yet?",
+  "Does it smell musty, damp, or moldy?",
+  "Have you noticed any cracking or bowing in basement walls?",
+  "Do you have doors that stick?",
+  "Any cracks in drywall / sheetrock upstairs?",
+  "Any cracks in exterior brick/block?",
+  "Assuming everything makes sense, when do you want the work done?"
+];
+
+const CRAWL_SPEC_QUESTIONS = [
+  "Has anyone mentioned standing water in the crawl space?",
+  "Have you noticed musty/damp smells upstairs?",
+  "Does anyone have health concerns (asthma/allergies)?",
+  "Have you had rotten wood replaced yet?",
+  "Have you noticed insect or rodent activity?",
+  "Have you noticed cold floors in the winter?",
+  "Are your energy bills high?",
+  "Have you noticed uneven floors?",
+  "What about bouncy floors or furniture that rattles?",
+  "Do you have doors that stick?",
+  "Any cracks in drywall / sheetrock?",
+  "Assuming everything makes sense, when do you want the work done?"
+];
+
+const CONCRETE_SPEC_QUESTIONS = [
+  "What other concrete areas do you have around the home?",
+  "How is this issue preventing you from using the space?",
+  "Have you seen any cracks in exterior concrete slabs?",
+  "What about trip hazards or uneven sections?",
+  "Have you noticed sloping or unlevel floors inside?",
+  "Any cracks in basement walls?",
+  "Do interior doors stick?",
+  "Any cracks in drywall / sheetrock?",
+  "Assuming everything makes sense, when do you want the work done?"
+];
+
+const CONSULT_QUESTION_SETS = {
+  basement: [...CORE_TOP_QUESTIONS, ...BASEMENT_SPEC_QUESTIONS],
+  crawlspace: [...CORE_TOP_QUESTIONS, ...CRAWL_SPEC_QUESTIONS],
+  concrete: [...CORE_TOP_QUESTIONS, ...CONCRETE_SPEC_QUESTIONS]
+};
+
+function choice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+const FACTORS = {
+  homeBuilt: ["1948","1956","1962","1971","1978","1984","1992","1999","2006","2012","2018"],
+  livedHere: ["6 months","1 year","2 years","4 years","7 years","10+ years","15 years","20+ years","30+ years"],
+  foreverHome: ["Yes","No","Undecided"],
+  firstNoticed: ["Last month","6 months ago","1–2 years ago","2–3 years ago","5+ years ago","After a big storm season","After a remodel/contractor visit"],
+  changes: [
+    "Gradual worsening", "Worse after heavy rain", "Cracks slowly spreading", "Odor/humidity increasing",
+    "More frequent puddling", "New doors/windows sticking", "More pooling water outside"
+  ],
+  repairsPast: [
+    "No", "Yes – patched/caulked", "Yes – added dehumidifier/fans", "Yes – regraded outside",
+    "Yes – installed gutters/downspouts", "Yes – replaced a section of concrete", "Yes – added sump pump (old/undersized)"
+  ],
+  concernsMost: [
+    "Safety/structural risk", "Resale value", "Mold/air quality", "Cost if it gets worse",
+    "Damage to finished areas", "Liability (guests/tenants)", "HOA/property manager scrutiny"
+  ],
+  actionNow: [
+    "Selling/refinance coming up", "Recent heavy rain made it obvious", "Issue seems to be getting worse",
+    "A contractor/inspector flagged it", "Safety concern for kids/guests", "HOA/property manager visibility",
+    "Planning a remodel / finishing project", "Insurance asked questions", "Tenant/guest complained"
+  ],
+  timing: ["ASAP","Next 30–60 days","Next 60–90 days","Before summer humidity","Before winter","Before sale/remodel","This year"],
+};
+
+const BASEMENT_POOLS = {
+  problems: [
+    "Water intrusion at wall-floor joint","Musty smell","Staining/efflorescence",
+    "Horizontal wall cracks","Slight wall bowing","Corner cracking","Floor cracks",
+    "Dehumidifier running constantly","Paint bubbling/peeling","Wet storage area"
+  ],
+  waterYes: ["Yes","No (mostly damp)","Sometimes (seasonal)"],
+  waterWhere: ["Joint","Floor crack near corner","Through wall seepage","Near stairwell","By sump crock","Low spot by exterior wall"],
+  leakFreq: ["Only during heavy rain","A few times per year","Every big storm","Monthly during wet season","Intermittent/unknown"],
+  mostWater: ["Small puddles","1–2 inches in low spot","Wet carpet/storage area","Water line on concrete wall","Sump overflow once"],
+  mold: ["No visible mold","Suspected","Visible in corners","Previous remediation years ago"],
+  smell: ["Yes","Sometimes","No (but damp)"],
+  wallIssue: ["None noticed","Horizontal crack","Slight bowing","Multiple horizontal cracks","Stair-step cracks","Corners cracking"],
+  drywall: ["No","Yes – hairline","A few around doors/windows","Multiple hairlines after rain season"],
+  brick: ["No","Yes – stair-step","Yes – near corners","Hairline mortar cracking"],
+  impact: [
+    "Ruined storage","Avoid finishing the basement","Worried about long-term damage",
+    "Guests notice odor","Can’t use the space as planned","Concern about liability for tenants"
+  ]
+};
+
+const CRAWL_POOLS = {
+  problems: [
+    "Musty smell upstairs","Standing water after rain","High humidity",
+    "Cold floors in winter","Energy bills feel high","Uneven/bouncy floors",
+    "Rodent/insect activity","Wood looks dark/soft in spots","Insulation falling down",
+    "Duct sweating/condensation"
+  ],
+  waterMention: ["Yes","No","Sometimes after storms","Not sure"],
+  odor: ["Yes","Sometimes","No"],
+  health: ["No","Yes – allergies/asthma","Yes – sinus/respiratory sensitivity"],
+  rot: ["No","Unknown","Yes – replaced a small section","Yes – sistered a joist once"],
+  pests: ["No","Some insects","Yes – rodents","Yes – both insects and rodents"],
+  floors: ["Cold in winter","Noticed lately","Always been cold","Only one area is cold"],
+  bills: ["Normal","High","Spiky / inconsistent","Higher than neighbors (seems)"],
+  uneven: ["No","A little","Yes – noticeable slope","Yes – localized dip"],
+  bouncy: ["No","Only in one room","Yes – living room","Yes – hallway area"],
+  impact: [
+    "Comfort issues","Air quality concern","Worried about rot/mold","Resale/inspection anxiety",
+    "Feels unsafe in one area","Trying to stop pests getting inside"
+  ]
+};
+
+const CONCRETE_POOLS = {
+  problems: [
+    "Uneven driveway/walkway","Trip hazard","Pooling water",
+    "Patio corner settling","Front steps feel shifted","Cracks near entry",
+    "Garage approach is uneven","Pool deck settlement","Sidewalk panels lifted"
+  ],
+  otherAreas: [
+    "Driveway, walkway, patio","Pool deck + patio","Front steps + porch",
+    "Garage slab + approach","Sidewalk + driveway apron","Back patio + side gate path"
+  ],
+  useImpact: [
+    "Avoiding the area","Worried about guests","Hard to roll bins/strollers",
+    "Looks bad / curb appeal","Water drains toward the house","Door rubs sometimes"
+  ],
+  cracks: [
+    "Yes – multiple hairline cracks","Yes – one major crack","Some separation at joints",
+    "Cracking near corner","Crack that widens toward one end"
+  ],
+  uneven: [
+    "1–2 inch lip","Several small lips","One corner sunk","Panel tilted","Step/edge offset"
+  ],
+  interiorSlope: ["No","Yes – slight slope","Yes – localized dip","Not sure"],
+  actionDriver: [
+    "Liability concern","HOA notice","Selling soon","Recent acceleration","Inspector flagged it",
+    "Concern about drainage toward foundation","Want to fix before hosting/event"
+  ]
+};
+
+// Example follow-up templates by type+focus-ish
+const EXAMPLE_TEMPLATES = {
+  basement: [
+    "When the water shows up, is it always tied to heavy rain, and how long does it typically sit before it dries out—minutes, hours, or days?",
+    "On the wall cracking/bowing—have you noticed the cracks widening over time or reappearing after patching, and do doors/windows get harder to operate during certain seasons?",
+    "On the humidity/musty odor—does it spike during specific seasons or after storms, and is anyone in the home sensitive to air quality (allergies/asthma)?",
+    "If we stop the water and stabilize the wall movement, what changes would matter most to you—protecting finishes, resale confidence, or peace of mind?"
+  ],
+  crawlspace: [
+    "When you notice moisture or standing water, is it only after storms or also during humid stretches—and where do you see it collecting most?",
+    "On the bouncy/uneven floors—where is it most noticeable, and has it been getting worse over time or tied to certain seasons or rainfall?",
+    "If we could make the crawl space dry and controlled year-round, would your priority be comfort, lowering energy bills, or preventing future wood damage—what matters most?",
+    "Do you know if the musty smell is strongest near certain rooms/vents, and does it change when the HVAC runs?"
+  ],
+  concrete: [
+    "On the trip hazard—has anyone nearly fallen yet, and is the lip getting worse over time or mainly after heavy rains and drainage changes?",
+    "Do you notice water collecting under/around this slab, and has any soil washed out or settled nearby?",
+    "If we stabilize one area first, which spot would you prioritize based on safety and daily use?",
+    "Is your main concern appearance, safety/liability, or stopping water from draining back toward the structure?"
+  ]
+};
+
+/* ---------- Unique scenario generation ---------- */
+
+function hashScenario(qa){
+  // Simple signature from answers only (good enough for uniqueness here)
+  return qa.map(([q,a])=>a).join(" | ");
+}
+
+function buildScenario(type, idNum){
+  if (type === "basement") return makeBasementScenario(`B-${String(idNum).padStart(4,"0")}`);
+  if (type === "crawlspace") return makeCrawlScenario(`C-${String(idNum).padStart(4,"0")}`);
+  return makeConcreteScenario(`S-${String(idNum).padStart(4,"0")}`);
+}
+
+function generateUniqueScenarios(type, targetCount){
+  const out = [];
+  const seen = new Set();
+  let attempts = 0;
+  let idNum = 1;
+
+  while (out.length < targetCount && attempts < targetCount * 50){
+    attempts++;
+    const s = buildScenario(type, idNum++);
+    const sig = hashScenario(s.qa);
+    if (seen.has(sig)) continue;
+    seen.add(sig);
+    out.push(s);
+  }
+
+  if (out.length < targetCount){
+    console.warn(`Only generated ${out.length}/${targetCount} unique for`, type, "attempts", attempts);
+  }
+  return out;
+}
+
+function makeBasementScenario(id){
+  const yearBuilt = choice(FACTORS.homeBuilt);
+  const livedHere = choice(FACTORS.livedHere);
+  const forever = choice(FACTORS.foreverHome);
+
+  const problemsPicked = Array.from({length: randInt(2,4)}, () => choice(BASEMENT_POOLS.problems));
+  const problems = [...new Set(problemsPicked)].slice(0,4).join(", ");
+
+  const qa = [
+    ["When was the home built?", yearBuilt],
+    ["How long have you lived here?", livedHere],
+    ["Is this your forever home?", forever],
+    ["What problems have you noticed?", problems],
+    ["When did you first notice this problem?", choice(FACTORS.firstNoticed)],
+    ["What changes have you noticed since then?", choice(FACTORS.changes)],
+    ["How has this issue impacted you so far?", choice(BASEMENT_POOLS.impact)],
+    ["Have you attempted any repairs in the past?", choice(FACTORS.repairsPast)],
+    ["What about the problem concerns you the most?", choice(FACTORS.concernsMost)],
+    ["What’s prompting you to take action now?", choice(FACTORS.actionNow)],
+
+    ["Have you noticed water coming into the basement?", choice(BASEMENT_POOLS.waterYes)],
+    ["Where does the water come in (walls / floor / joint)?", choice(BASEMENT_POOLS.waterWhere)],
+    ["How often does it leak?", choice(BASEMENT_POOLS.leakFreq)],
+    ["What’s the most water you’ve ever had?", choice(BASEMENT_POOLS.mostWater)],
+    ["Have you seen any mold yet?", choice(BASEMENT_POOLS.mold)],
+    ["Does it smell musty, damp, or moldy?", choice(BASEMENT_POOLS.smell)],
+    ["Have you noticed any cracking or bowing in basement walls?", choice(BASEMENT_POOLS.wallIssue)],
+    ["Do you have doors that stick?", choice(["Yes","No","Sometimes","Only in winter/summer"])],
+    ["Any cracks in drywall / sheetrock upstairs?", choice(BASEMENT_POOLS.drywall)],
+    ["Any cracks in exterior brick/block?", choice(BASEMENT_POOLS.brick)],
+    ["Assuming everything makes sense, when do you want the work done?", choice(FACTORS.timing)]
+  ];
+
+  const focus =
+    qa.find(x=>x[0].includes("water coming"))?.[1].startsWith("Yes") ? "water" :
+    qa.find(x=>x[0].includes("cracking or bowing"))?.[1].toLowerCase().includes("bow") ? "walls" :
+    qa.find(x=>x[0].includes("musty"))?.[1] !== "No" ? "air" : "mixed";
+
+  return { id, type:"basement", focus, qa, example: choice(EXAMPLE_TEMPLATES.basement) };
+}
+
+function makeCrawlScenario(id){
+  const yearBuilt = choice(FACTORS.homeBuilt);
+  const livedHere = choice(FACTORS.livedHere);
+  const forever = choice(FACTORS.foreverHome);
+
+  const problemsPicked = Array.from({length: randInt(2,4)}, () => choice(CRAWL_POOLS.problems));
+  const problems = [...new Set(problemsPicked)].slice(0,4).join(", ");
+
+  const qa = [
+    ["When was the home built?", yearBuilt],
+    ["How long have you lived here?", livedHere],
+    ["Is this your forever home?", forever],
+    ["What problems have you noticed?", problems],
+    ["When did you first notice this problem?", choice(FACTORS.firstNoticed)],
+    ["What changes have you noticed since then?", choice(FACTORS.changes)],
+    ["How has this issue impacted you so far?", choice(CRAWL_POOLS.impact)],
+    ["Have you attempted any repairs in the past?", choice(FACTORS.repairsPast)],
+    ["What about the problem concerns you the most?", choice(FACTORS.concernsMost)],
+    ["What’s prompting you to take action now?", choice(FACTORS.actionNow)],
+
+    ["Has anyone mentioned standing water in the crawl space?", choice(CRAWL_POOLS.waterMention)],
+    ["Have you noticed musty/damp smells upstairs?", choice(CRAWL_POOLS.odor)],
+    ["Does anyone have health concerns (asthma/allergies)?", choice(CRAWL_POOLS.health)],
+    ["Have you had rotten wood replaced yet?", choice(CRAWL_POOLS.rot)],
+    ["Have you noticed insect or rodent activity?", choice(CRAWL_POOLS.pests)],
+    ["Have you noticed cold floors in the winter?", choice(CRAWL_POOLS.floors)],
+    ["Are your energy bills high?", choice(CRAWL_POOLS.bills)],
+    ["Have you noticed uneven floors?", choice(CRAWL_POOLS.uneven)],
+    ["What about bouncy floors or furniture that rattles?", choice(CRAWL_POOLS.bouncy)],
+    ["Do you have doors that stick?", choice(["Yes","No","Sometimes","Only one door"])],
+    ["Any cracks in drywall / sheetrock?", choice(["No","Yes – hairline","A few around doors/windows","Ceiling crack in one room"])],
+    ["Assuming everything makes sense, when do you want the work done?", choice(FACTORS.timing)]
+  ];
+
+  const focus =
+    qa.find(x=>x[0].includes("standing water"))?.[1].toLowerCase().includes("yes") ? "moisture" :
+    qa.find(x=>x[0].includes("bouncy"))?.[1].toLowerCase().includes("yes") ? "structure" :
+    qa.find(x=>x[0].includes("energy bills"))?.[1].toLowerCase().includes("high") ? "energy" : "mixed";
+
+  return { id, type:"crawlspace", focus, qa, example: choice(EXAMPLE_TEMPLATES.crawlspace) };
+}
+
+function makeConcreteScenario(id){
+  const yearBuilt = choice(FACTORS.homeBuilt);
+  const livedHere = choice(FACTORS.livedHere);
+  const forever = choice(FACTORS.foreverHome);
+
+  const problemsPicked = Array.from({length: randInt(2,4)}, () => choice(CONCRETE_POOLS.problems));
+  const problems = [...new Set(problemsPicked)].slice(0,4).join(", ");
+
+  const qa = [
+    ["When was the home built?", yearBuilt],
+    ["How long have you lived here?", livedHere],
+    ["Is this your forever home?", forever],
+    ["What problems have you noticed?", problems],
+    ["When did you first notice this problem?", choice(FACTORS.firstNoticed)],
+    ["What changes have you noticed since then?", choice(FACTORS.changes)],
+    ["How has this issue impacted you so far?", choice(CONCRETE_POOLS.useImpact)],
+    ["Have you attempted any repairs in the past?", choice(FACTORS.repairsPast)],
+    ["What about the problem concerns you the most?", choice(FACTORS.concernsMost)],
+    ["What’s prompting you to take action now?", choice(CONCRETE_POOLS.actionDriver)],
+
+    ["What other concrete areas do you have around the home?", choice(CONCRETE_POOLS.otherAreas)],
+    ["How is this issue preventing you from using the space?", choice(CONCRETE_POOLS.useImpact)],
+    ["Have you seen any cracks in exterior concrete slabs?", choice(CONCRETE_POOLS.cracks)],
+    ["What about trip hazards or uneven sections?", choice(CONCRETE_POOLS.uneven)],
+    ["Have you noticed sloping or unlevel floors inside?", choice(CONCRETE_POOLS.interiorSlope)],
+    ["Any cracks in basement walls?", choice(["No","Not sure","Yes – hairline","Yes – one corner crack"])],
+    ["Do interior doors stick?", choice(["No","Sometimes","Yes – one door","Seasonal"])],
+    ["Any cracks in drywall / sheetrock?", choice(["No","Yes – hairline","A few around openings","Ceiling line crack"])],
+    ["Assuming everything makes sense, when do you want the work done?", choice(FACTORS.timing)]
+  ];
+
+  const focus =
+    qa.find(x=>x[0].includes("trip hazards"))?.[1].toLowerCase().includes("lip") ? "trip" :
+    qa.find(x=>x[0].includes("drains")) ? "drainage" : "settlement";
+
+  return { id, type:"concrete", focus, qa, example: choice(EXAMPLE_TEMPLATES.concrete) };
+}
+
+/* Build pools: target ~160 each (original ~30 +100 more + buffer) */
+function buildScenarioPool(){
+  const targetPerType = 160; // >= 25 + 100 more; gives you lots of unique reps
+  return {
+    basement: generateUniqueScenarios("basement", targetPerType),
+    crawlspace: generateUniqueScenarios("crawlspace", targetPerType),
+    concrete: generateUniqueScenarios("concrete", targetPerType),
+  };
+}
+
+/* ============================================================
+   SCORING ENGINE (unchanged)
+   ============================================================ */
+const OPENERS = ["what","when","where","how","tell me","walk me through","help me understand","can you describe","which"];
+const EMPATHY = ["worry","concern","stress","frustrat","peace of mind","comfort","safe","safety","kids","family","guests","tenant","liability"];
+const URGENCY = ["urgent","asap","soon","timeline","deadline","sale","refinance","inspection","closing","listing","move","event"];
+const MOISTURE = ["water","leak","seep","damp","humidity","musty","mold","condensation","efflorescence","standing water"];
+const STRUCTURE = ["crack","bow","shift","settle","slope","uneven","stick","door","window","joist","beam","support","bouncy"];
+const CONCRETE = ["slab","driveway","walkway","patio","pool","trip","hazard","lip","level","lift","step","panel"];
+const AVOID_LEADING = ["don’t you think","wouldn’t you say","so you agree","right?"];
+
+function normalize(s){ return (s||"").trim().toLowerCase(); }
+
+function buildUpgradeSuggestion(scenario){
+  if (scenario.type === "basement"){
+    if (scenario.focus === "water"){
+      return `Upgrade pattern: “When + where + duration + trigger.” Example: “When it leaks, is it only during heavy rain—and how long does the water sit before it dries?”`;
+    }
+    if (scenario.focus === "walls"){
+      return `Upgrade pattern: “Change over time + functional impact.” Example: “Have the cracks widened or reappeared after patching—and are doors/windows getting harder to operate?”`;
+    }
+    return `Upgrade pattern: “Seasonality + air quality impact.” Example: “Does the musty smell spike in certain seasons—and is anyone sensitive to air quality?”`;
+  }
+  if (scenario.type === "crawlspace"){
+    if (scenario.focus === "moisture"){
+      return `Upgrade pattern: “Storm vs humidity + evidence + low spots.” Example: “Is moisture tied to storms or humidity—and where do you see it collecting?”`;
+    }
+    if (scenario.focus === "structure"){
+      return `Upgrade pattern: “Location + progression.” Example: “Where is the bounce most noticeable—and has it changed over the last year?”`;
+    }
+    return `Upgrade pattern: “Priority choice.” Example: “If we could fix one first—comfort, bills, or prevention—what matters most?”`;
+  }
+  if (scenario.focus === "trip"){
+    return `Upgrade pattern: “Incidents + frequency + progression.” Example: “Has anyone nearly tripped, and is the lip getting worse over time?”`;
+  }
+  return `Upgrade pattern: “Drainage + soil conditions + priority.” Example: “Do you see water collecting under/around the slab—and which area would you fix first if we staged it?”`;
+}
+
+function scoreQuestion(q, scenario){
+  const text = normalize(q);
+  let points = 0;
+  let notes = [];
+
+  if (!text) return {score:1, notes:["No question entered."], strengths:[], improvements:["Write one follow-up question."], example: scenario.example};
+  if (!text.includes("?")) notes.push("Add a question mark to keep it clearly framed as a question.");
+
+  const words = text.split(/\s+/).filter(Boolean);
+  if (words.length >= 8) points += 1;
+  else notes.push("Make it a bit more specific (8+ words usually helps).");
+  if (words.length > 35) notes.push("Consider tightening it—one clear follow-up question is ideal.");
+
+  const startsOpen = OPENERS.some(o => text.startsWith(o));
+  const hasHowWhatWhen = OPENERS.some(o => text.includes(o+" "));
+  if (startsOpen || hasHowWhatWhen) points += 2;
+  else notes.push("Try an open-ended starter (What/How/When/Walk me through…).");
+
+  const hasLeading = AVOID_LEADING.some(p => text.includes(p));
+  if (hasLeading) notes.push("Avoid leading phrases (let them tell you, don’t steer them).");
+  else points += 1;
+
+  const yesNoOnly = /^(is|are|do|did|have|has|can|will)\b/.test(text) && !text.includes("why") && !text.includes("how") && !text.includes("what");
+  if (yesNoOnly) notes.push("Yes/No questions are fine sometimes, but add a second clause to deepen it (e.g., “and what happened after…”).");
+  else points += 1;
+
+  let rel = 0;
+  if (scenario.type === "basement"){
+    if (MOISTURE.some(k=>text.includes(k))) rel++;
+    if (STRUCTURE.some(k=>text.includes(k))) rel++;
+  } else if (scenario.type === "crawlspace"){
+    if (MOISTURE.some(k=>text.includes(k))) rel++;
+    if (STRUCTURE.some(k=>text.includes(k))) rel++;
+    if (text.includes("energy") || text.includes("bill") || text.includes("insulation") || text.includes("cold")) rel++;
+  } else {
+    if (CONCRETE.some(k=>text.includes(k))) rel++;
+    if (text.includes("drain") || text.includes("pool") || text.includes("wash") || text.includes("soil")) rel++;
+    if (text.includes("safe") || text.includes("trip") || text.includes("liability")) rel++;
+  }
+  if (rel >= 1) points += 1;
+  else notes.push("Tie your follow-up more directly to what they said (water/odor/cracks/unevenness/timing).");
+
+  let stakes = 0;
+  if (EMPATHY.some(k=>text.includes(k))) stakes++;
+  if (URGENCY.some(k=>text.includes(k))) stakes++;
+  if (text.includes("why") || text.includes("most") || text.includes("biggest")) stakes++;
+  if (stakes >= 1) points += 1;
+  else notes.push("Add impact or stakes (comfort, safety, resale, timeline, budget constraints).");
+
+  let raw = Math.max(0, Math.min(8, points));
+  let score = 1;
+  if (raw <= 1) score = 1;
+  else if (raw <= 3) score = 2;
+  else if (raw <= 5) score = 3;
+  else if (raw <= 6) score = 4;
+  else score = 5;
+
+  const strengths = [];
+  const improvements = [];
+
+  if (startsOpen || hasHowWhatWhen) strengths.push("Open-ended structure");
+  if (!hasLeading) strengths.push("Not leading");
+  if (!yesNoOnly) strengths.push("Adds depth beyond Yes/No");
+  if (rel >= 1) strengths.push("Relevant to their stated issue");
+  if (stakes >= 1) strengths.push("Touches impact/decision drivers");
+
+  improvements.push(...notes.slice(0,4));
+
+  const upgrade = buildUpgradeSuggestion(scenario);
+  return {score, strengths, improvements, upgrade, example: scenario.example};
+}
+
+/* ============================================================
+   APP STATE + UI
+   ============================================================ */
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function loadStats(){
+  try{
+    const raw = localStorage.getItem("cfi_trainer_stats_v1");
+    if (!raw) return {attempts:0, total:0, best:0};
+    return JSON.parse(raw);
+  }catch(e){
+    return {attempts:0, total:0, best:0};
+  }
+}
+function saveStats(){ localStorage.setItem("cfi_trainer_stats_v1", JSON.stringify(STATE.stats)); }
+
+const POOLS = buildScenarioPool();
+const STATE = {
+  currentType: "basement",
+  currentScenario: null,
+  stats: loadStats()
+};
+
+function pickScenario(type){
+  const pool = POOLS[type] || [];
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+
+function renderScenario(){
+  const s = STATE.currentScenario;
+  const qaEl = document.getElementById("scenarioQA");
+  qaEl.innerHTML = "";
+
+  document.getElementById("scenarioMeta").textContent = `Scenario: ${s.id} • Focus: ${s.focus}`;
+  document.getElementById("scenarioCount").textContent = `Pool: ${POOLS[STATE.currentType].length} scenarios`;
+
+  for (const [q,a] of s.qa){
+    const b = document.createElement("div");
+    b.className = "qblock";
+    b.innerHTML = `<div class="qline">${escapeHtml(q)}</div><div class="aline">${escapeHtml(a)}</div>`;
+    qaEl.appendChild(b);
+  }
+
+  document.getElementById("userQuestion").value = "";
+  setScoreUI(null);
+  document.getElementById("feedback").textContent = "Submit a follow-up question to get a score and targeted feedback.";
+  document.getElementById("exampleFollowUp").textContent = "—";
+}
+
+function setScoreUI(result){
+  const badge = document.getElementById("scoreBadge");
+  const label = document.getElementById("scoreLabel");
+
+  if (!result){
+    badge.className = "badge";
+    badge.textContent = "—";
+    label.textContent = "Waiting for a submission";
+    return;
+  }
+
+  badge.textContent = `${result.score}/5`;
+  if (result.score >= 4){
+    badge.className = "badge good";
+    label.textContent = "Strong follow-up";
+  } else if (result.score === 3){
+    badge.className = "badge ok";
+    label.textContent = "Decent, could be sharper";
+  } else {
+    badge.className = "badge bad";
+    label.textContent = "Needs improvement";
+  }
+}
+
+function renderFeedback(result){
+  const el = document.getElementById("feedback");
+  const parts = [];
+
+  if (result.strengths.length){
+    parts.push(`<div class="mono" style="color:#bbf7d0; font-weight:700; margin-bottom:6px;">Strengths</div>`);
+    parts.push(`<ul>${result.strengths.map(s=>`<li>${escapeHtml(s)}</li>`).join("")}</ul>`);
+  }
+  if (result.improvements.length){
+    parts.push(`<div class="mono" style="color:#fde68a; font-weight:700; margin-top:10px; margin-bottom:6px;">Improve</div>`);
+    parts.push(`<ul>${result.improvements.map(s=>`<li>${escapeHtml(s)}</li>`).join("")}</ul>`);
+  }
+  parts.push(`<div class="mono" style="color:#93c5fd; font-weight:700; margin-top:10px; margin-bottom:6px;">Upgrade Pattern</div>`);
+  parts.push(`<div class="hint">${escapeHtml(result.upgrade)}</div>`);
+
+  el.innerHTML = parts.join("");
+}
+
+function renderStats(){
+  const s = STATE.stats;
+  document.getElementById("statAttempts").textContent = s.attempts;
+  document.getElementById("statBest").textContent = s.best;
+  const avg = s.attempts ? (s.total / s.attempts) : 0;
+  document.getElementById("statAvg").textContent = avg.toFixed(1);
+}
+
+function resetStats(){
+  STATE.stats = {attempts:0, total:0, best:0};
+  saveStats();
+  renderStats();
+}
+
+/* Events */
+document.getElementById("consultType").addEventListener("change", (e) => {
+  STATE.currentType = e.target.value;
+  STATE.currentScenario = pickScenario(STATE.currentType);
+  renderScenario();
+});
+
+document.getElementById("newScenarioBtn").addEventListener("click", () => {
+  STATE.currentScenario = pickScenario(STATE.currentType);
+  renderScenario();
+});
+
+document.getElementById("resetBtn").addEventListener("click", () => resetStats());
+
+document.getElementById("scoreBtn").addEventListener("click", () => {
+  const q = document.getElementById("userQuestion").value;
+  const result = scoreQuestion(q, STATE.currentScenario);
+
+  setScoreUI(result);
+  renderFeedback(result);
+  document.getElementById("exampleFollowUp").textContent = result.example;
+
+  STATE.stats.attempts += 1;
+  STATE.stats.total += result.score;
+  STATE.stats.best = Math.max(STATE.stats.best, result.score);
+  saveStats();
+  renderStats();
+});
+
+document.getElementById("revealBetterBtn").addEventListener("click", () => {
+  document.getElementById("exampleFollowUp").textContent = STATE.currentScenario.example;
+});
+
+/* Init */
+(function init(){
+  STATE.currentType = document.getElementById("consultType").value;
+  STATE.currentScenario = pickScenario(STATE.currentType);
+  renderScenario();
+  renderStats();
+  console.log("Scenario counts:", {
+    basement: POOLS.basement.length,
+    crawlspace: POOLS.crawlspace.length,
+    concrete: POOLS.concrete.length
+  });
+})();
+</script>
+</body>
+</html>
